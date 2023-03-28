@@ -1,4 +1,4 @@
-<h1 align="center">Angular - Jsplumb exemple proto 2 updated</h1>
+<h1>Angular - Jsplumb exemple proto 2 updated</h1>
 
 It's just a Jsplumb project that i forked and updated 
 

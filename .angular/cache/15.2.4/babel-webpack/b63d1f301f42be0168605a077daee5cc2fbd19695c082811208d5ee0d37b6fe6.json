@@ -1,0 +1,1 @@
+{"ast":null,"code":"var dijkstra = require(\"./dijkstra\");\nmodule.exports = dijkstraAll;\nfunction dijkstraAll(g, weightFunc, edgeFunc) {\n  return g.nodes().reduce(function (acc, v) {\n    acc[v] = dijkstra(g, v, weightFunc, edgeFunc);\n    return acc;\n  }, {});\n}","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

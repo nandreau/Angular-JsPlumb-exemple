@@ -1,0 +1,1 @@
+{"ast":null,"code":"var dfs = require(\"./dfs\");\nmodule.exports = postorder;\nfunction postorder(g, vs) {\n  return dfs(g, vs, \"post\");\n}","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

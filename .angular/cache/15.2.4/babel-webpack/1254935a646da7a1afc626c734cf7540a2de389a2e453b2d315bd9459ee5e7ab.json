@@ -1,0 +1,1 @@
+{"ast":null,"code":"var tarjan = require(\"./tarjan\");\nmodule.exports = findCycles;\nfunction findCycles(g) {\n  return tarjan(g).filter(function (cmpt) {\n    return cmpt.length > 1 || cmpt.length === 1 && g.hasEdge(cmpt[0], cmpt[0]);\n  });\n}","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

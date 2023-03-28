@@ -1,0 +1,30 @@
+
+.node {
+  border-color: var(--canvas-block-end-background-color);
+  color: var(--canvas-block-end-color);
+  background-color: var(--canvas-block-end-color);
+
+  min-width: 70px;
+  max-width: 70px;
+  min-height: 70px;
+  padding: 2px; 
+  text-align: center;
+  border-radius: 50%;
+
+  border-style: solid;
+  border-width: 4px;
+  font-size: 14px;
+
+}
+
+fa-icon {
+  font-size: 35px;
+}
+
+.wrapper {
+  background-color: var(--canvas-block-end-background-color);;
+  border-radius: 50%;
+  min-width: 70px;
+  max-width: 70px;
+  min-height: 70px;
+}

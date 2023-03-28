@@ -1,0 +1,59 @@
+<!--div 
+    class="block-wrapper"
+    [id]="block.uuid"
+  [style.top.px]="layout.top || 0"
+  [style.left.px]="layout.left || 0"
+  [style.width.px]="layout.width || 150"
+  [style.height.px]="layout.height || 30"
+
+    [ngClass]="{'open-in-inspector': isSelected}"-->
+  <!--
+      Div que se sobrepone a todo el bloque renderizado
+      y captura los clicks para evitar que se pueda activar el foco
+      dentro del bloque
+  -->
+  <div class="block-overlay">
+
+  </div>
+  <!--
+      Toolbar para las acciones que se pueden hacer al bloque
+  -->
+	<div class="block-toolbar" (click)="clickToolbar($event)">
+    X
+		<!--ios-designer-block-toolbar
+        [allowDelete]="allowDelete"
+        [allowDown]="allowDown"
+        [allowDuplicate]="allowDuplicate"
+        [allowUp]="allowUp"
+        [block]="block"
+        [isSelected]="isSelected"
+        (delete)="delete.emit($event)"
+        (duplicate)="duplicate.emit($event)"
+        (inspectBlock)="inspectBlock.emit($event)"                  
+        (moveDown)="moveDown.emit($event)"
+        (moveUp)="moveUp.emit($event)"
+		></ios-designer-block-toolbar-->
+	</div>
+  <!--
+      Este div se encuentra en el flujo normal (posicionamiento estático)
+      Y se dibuja completo el bloque.
+      Esto hace que el block-wrapper, tenga el tamaño completo del bloque
+      y permite que se puedan posicionar "absolutamente" el toolbar y el overlay
+
+      El toolbar ocupa sólo un pedacito en el tope superior derecho
+      y el overlay ocupa todo el espacio del bloque
+  -->
+	<div class="block-render" >
+		<ios-designer-block-row-fragment
+			[block] = "block"
+			[rowFragment] = "blockDefinition ? blockDefinition.rowFragment : ''">
+			<!--
+        Placeholder para colocar el componente que renderiza el bloque
+      -->
+			<!--ng-template *ngTemplateOutlet="canvas"></ng-template-->
+      <ng-container #canvas></ng-container>
+		</ios-designer-block-row-fragment>
+	</div>
+<!--/div-->
+
+

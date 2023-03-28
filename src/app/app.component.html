@@ -1,0 +1,180 @@
+<div class="catalog">
+  <button (click)="insertBlock({block: {class: 'flow.start'}, index: 0})">
+    Agregar Comienzo
+    </button>
+  <button (click)="insertBlock({block: {class: 'flow.end'}, index: 0})">
+    Agregar Final
+    </button>
+      &nbsp;&nbsp;&nbsp;
+
+  <button (click)="insertBlock({block: {class: 'flow.signal', title: 'Contacto hizo un chat'}, index: 0})">
+    Señal chat
+    </button>
+  <button (click)="insertBlock({block: {class: 'flow.signal', title: 'Contacto abrió correo'}, index: 0})">
+    Señal Apertura
+    </button>
+  <button (click)="insertBlock({block: {class: 'flow.signal', title: 'Contacto hizo click en correo'}, index: 0})">
+    Señal Click en correo
+    </button>
+  &nbsp;&nbsp;&nbsp;
+
+  <button (click)="insertBlock({block: {class: 'flow.action', title: 'Enviar webhook'}, index: 0})">
+    Acción Webhook
+    </button>
+  <button (click)="insertBlock({block: {class: 'flow.action', title: 'Enviar correo Cotización'}, index: 0})">
+    Acción Mensaje
+    </button>
+  &nbsp;&nbsp;&nbsp;
+
+  <button (click)="insertBlock({block: {class: 'flow.node', title: 'Parada', expireTime: 5}, index: 0})">
+    Esperar respuesta
+  </button>
+
+  &nbsp;&nbsp;&nbsp;
+
+  <button (click)="insertBlock({block: {class: 'flow.note', title: 'Explicación', content: 'Esta nota usa markdown y sirve para explicar el flujo. Puede ser bien larga hasta cierto punto'}, index: 0})">
+    Agregar Nota
+  </button>
+
+
+</div>
+<div class="render">
+  <ios-designer-render
+    [blocks]="blocks"
+    [configuration]="configuration"
+    (flowValuesChange)="flowValuesChange($event)"
+    (delete)="deleteBlock($event)"
+    ></ios-designer-render>
+</div>
+
+<div class="toolbar">
+  <button (click)="loadFromStorage()">Cargar</button>
+  <button (click)="save()">Guardar</button>
+  <button (click)="resetData()">Close</button>
+  &nbsp;&nbsp;
+
+  <button (click)="validate()">Validar</button>
+  <button (click)="publish()">Publicar</button>
+  &nbsp;&nbsp;
+
+  <button (click)="zoomIn()">Zoom In</button>
+  <button (click)="zoomOut()">Zoom Out</button>
+  <button (click)="resetZoom()">Reset Zoom</button>
+  &nbsp;&nbsp;
+
+  &nbsp;&nbsp;
+  <select (change)="updateConnectorType($event.target.value)">
+    <option value="FLOWCHART">Linea con esquinas</option>
+    <option value="BEZIER">Curvas</option>
+    <option value="STRAIGHT">Línea recta</option>
+    <option value="STATEMACHINE">Ligeramente curveada</option>
+  </select>
+  &nbsp;&nbsp;
+  <select (change)="updateTheme($event.target.value)">
+    <option value="basic-plain">Plain</option>
+    <option value="basic-one">One</option>
+    <option value="basic-two">Two</option>
+    <option value="basic-three">Three</option>
+    <option value="basic-four">Four</option>
+  </select>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.minimunBlocks">
+  Faltan {{configuration.errors.minimunBlocks.length}} tipos de bloques:
+  <div class="error-item" *ngFor="let item of configuration.errors.minimunBlocks;">
+      {{item.missing}} bloque del tipo <strong>{{item.type}}</strong>
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.uniqueComponent">
+  {{configuration.errors.uniqueComponent.length}} grupos de bloques que no están conectados
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.uniqueComponent; index as $index">
+      Resaltar grupo {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.acyclic">
+  {{configuration.errors.acyclic.length}} grupo de conectados circularmente
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.acyclic; index as $index">
+      Resaltar ciclo {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.uniqueEntryNode">
+  Sólo puede existir un bloque de espera en la entrada.  
+  Actualmente hay {{configuration.errors.uniqueEntryNode.length}} bloques de espera conectados con el inicio
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.uniqueEntryNode; index as $index">
+      Resaltar Bloque de Espera {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.connections">
+  Existen {{configuration.errors.connections.length}} que no permitidas.
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusEdge(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.connections; index as $index">
+      Resaltar conexión inválida {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.nodeInEveryRoute">
+  Todos las rutas deben tener al menos un bloque de espera.
+  Existen {{configuration.errors.nodeInEveryRoute.length}} que no tienen un bloque de espera.
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.nodeInEveryRoute; index as $index">
+      Resaltar ruta sin bloque de espera {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.validSources">
+  Los nodos de Inicio son los únicos que pueden estar al comienzo del flujo.
+  Existen {{configuration.errors.validSources.length}} bloques que están al comienzo.
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.validSources; index as $index">
+      Resaltar bloque {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.validSinks">
+  Los nodos de Fin son los únicos que pueden estar al final del flujo.
+  Existen {{configuration.errors.validSinks.length}} bloques que están al final.
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.validSinks; index as $index">
+      Resaltar bloque {{$index + 1}}
+  </div>
+</div>
+
+<div class="error-msg" *ngIf="configuration.errors && configuration.errors.expiration">
+  Los bloques de espera deben tener expiración.
+  Existen {{configuration.errors.expiration.length}} bloques que no tienen expiración.
+  <div
+      class="error-item focusable" 
+      (mouseover)="focusBlocks(list)"
+      (mouseout)="unfocusBlocks(list)" 
+      *ngFor="let list of configuration.errors.expiration; index as $index">
+      Resaltar bloque {{$index + 1}}
+  </div>
+</div>

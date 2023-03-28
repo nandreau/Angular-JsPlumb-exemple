@@ -1,0 +1,229 @@
+ios-designer-render-body {
+  --canvas-expiration-color: #FC7753;
+  --canvas-exit-label: #66A182;
+
+  --canvas-grid-background-color: #f8f6f6;
+  --canvas-grid-point-color: #bebfc0;
+
+  --canvas-endpoint-color: #ccc;
+  --canvas-connector-color: #ccc;
+
+  --canvas-block-action-background-color: #7286A0;
+  --canvas-block-action-color: white;
+
+  --canvas-block-start-background-color: #F7EF99;
+  --canvas-block-start-color: grey;
+
+  --canvas-block-signal-background-color: #F7EF99;
+  --canvas-block-signal-color: grey;
+
+  --canvas-block-end-background-color: #D4F5F5;
+  --canvas-block-end-color: grey;
+
+  --canvas-block-node-background-color: #BEB7A4;
+  --canvas-block-node-color: #fefefe;
+
+  --canvas-block-note-background-color: #FCFC62;
+  --canvas-block-note-color: #4B4B4B;
+
+  --canvas-block-border-focused: red;
+
+}
+
+.render-body-wrapper {
+  overflow: scroll;
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+
+.canvas {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  transition: transform 300ms ease-out;
+  transform-origin: top left;
+  /**
+   * Background con los punticos dibujados (grid)
+   */  
+  background: linear-gradient(90deg, var(--canvas-grid-background-color) 18px, transparent 1%) center, linear-gradient(var(--canvas-grid-background-color) 18px, transparent 1%) center, var(--canvas-grid-point-color);
+  /** El background se repite en cuadritos de este tamaño */
+  background-size: 20px 20px;
+}
+
+.jtk-overlay.connector-expiration-label, .jtk-overlay.connector-exit-label {
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 50%;
+  min-width: 20px;
+  min-height: 20px;
+  text-align: center;
+}
+
+.jtk-overlay.connector-expiration-label {
+  z-index: 1000;
+  background-color: var(--canvas-expiration-color);
+  cursor: pointer;
+}
+
+.jtk-overlay.connector-exit-label {
+  z-index: 1000;
+  /* background-color:#66A182; */
+  background-color: var(--canvas-exit-label);
+  cursor: pointer;
+}
+
+.jtk-endpoint {
+  z-index: 1000;
+  cursor: grab;
+  /**
+   * Truco para animar la aparición del enpoint
+   */
+  opacity: 0;
+	animation-delay: 200ms;
+  animation-name: endpointFadeIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+
+.jtk-connector.programatic-connector path:nth-child(2),
+.jtk-overlay.connector-exit-label,
+.jtk-overlay.connector-expiration-label {
+  /**
+   * Truco para animar la aparición del enpoint
+   */
+  opacity: 0;
+	animation-delay: 1000ms;
+  animation-name: endpointFadeIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes endpointFadeIn {
+  from {
+    opacity: 0;
+  }
+	to {
+		opacity: 1;
+	}
+}
+
+.jtk-endpoint.jtk-dragging {
+  cursor: grabbing;
+}
+
+.jtk-drag-select {
+  user-select: none;
+}
+
+/**
+ * Sombra para los endpoints
+ */
+.jtk-endpoint svg {
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+/** Apagamos la sombra cuándo el endpoint está full */
+.jtk-endpoint.jtk-endpoint-full svg {
+  filter: unset;
+}
+.jtk-endpoint.jtk-endpoint-full {
+  cursor: auto;
+  /* La coloco por encima de los conectores que tienen z-index=0 */
+  z-index: 10;
+}
+/**
+ * Endpoint para cada puerto
+ */
+.jtk-endpoint.endpoint-action-out svg *,
+.jtk-endpoint.endpoint-signal-out svg *,
+.jtk-endpoint.endpoint-start-out svg * {
+  fill: var(--canvas-endpoint-color);
+}
+.jtk-endpoint.endpoint-node-out svg * {
+  fill: var(--canvas-exit-label);
+}
+.jtk-endpoint.endpoint-node-expiration svg * {
+  /* fill: #FC7753; */
+  fill: var(--canvas-expiration-color);
+}
+
+
+
+.jtk-connector {
+  cursor: pointer;
+}
+
+.jtk-connector.programatic-connector path:nth-child(1) {
+  /**
+   * Estos valores se re-establece dinámicamente
+   * con el valor del largo de la conexión
+   * Se coloca un valor inicial alto para que no se muestre
+   * un "flash" cuándo se muestra inicialemnte
+   */
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  /**
+   * Animacion para la conexión
+   * El tiempo de la animación se establece
+   * en el servicio de jsPlumb
+   */
+  animation-name: expand-connection;
+  animation-delay: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+@keyframes expand-connection {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/**
+ * Connection marcada para ser eliminada
+ * Hace la animación para "retraer" la connection
+ */
+.jtk-connector.connection-marked-for-delete path:nth-child(1){
+  /**
+   * Animacion para la conexión
+   * El tiempo de la animación se establece
+   * en el servicio de jsPlumb
+   */
+  animation-name: retract-connection;
+  animation-delay: 00ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: backwards;
+  animation-direction: reverse;
+}
+
+
+@keyframes retract-connection {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/**
+ * Ocultamos el Overlay de la conexion marcada para borrar
+ */
+.jtk-connector.connection-marked-for-delete path:nth-child(2)
+ {
+  visibility: hidden;
+}
+
+/**
+ * Linea del conector
+ */
+.jtk-connector path:nth-child(1) {
+  stroke: var(--canvas-connector-color);
+  /* stroke: #ccc;*/
+}
+/**
+ * Overlay en el final del conector (flecha)
+ */
+.jtk-connector path:nth-child(2) {
+  stroke: var(--canvas-connector-color);
+  fill: var(--canvas-connector-color);
+}
+
+

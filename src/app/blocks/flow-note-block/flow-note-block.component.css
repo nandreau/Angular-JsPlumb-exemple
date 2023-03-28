@@ -1,0 +1,59 @@
+/** TODO: Evaluar si vamos a usar este tipo de letra realmente */
+ @import url('https://fonts.googleapis.com/css?family=Reenie+Beanie');
+
+
+.wrapper, *:after, *:before {
+  box-sizing: border-box;
+}
+
+
+
+.post-it-note {
+  color: var(--canvas-block-note-color);
+  background: var(--canvas-block-note-background-color);
+  position: relative;
+  max-width: 200px;
+  padding: 20px;
+  font-family: 'Reenie Beanie', cursive;    
+
+}
+
+
+h3 {
+  margin: 0px;
+  font-family: 'Reenie Beanie', cursive;   
+  font-size: 2em; 
+}
+
+p {
+  font-family: 'Reenie Beanie', cursive;    
+  margin-bottom: 10px;
+  margin-top: 5px;
+  font-size: 1.5em;
+
+}
+
+/*
+.post-it-note:after {
+  content: "";
+  position: absolute;
+  bottom: -2em;
+  
+  left: 0;
+  right: 2em;
+  border-width: 1em;
+  border-style: solid;
+  border-color: var(--canvas-block-note-background-color);
+}
+
+.post-it-note:before {
+  content: "";
+  position: absolute;
+  bottom: -2em;
+  right: 0;
+  border-width: 2em 2em 0 0;
+  border-style: solid;
+  border-color: var(--canvas-block-note-background-color) transparent;
+  filter: brightness(85%);
+}
+*/

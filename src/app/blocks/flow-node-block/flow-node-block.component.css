@@ -1,0 +1,38 @@
+.node {
+  background-color: var(--canvas-block-node-background-color);
+  color: var(--canvas-block-node-color);
+  
+  min-width: 200px;
+  max-width: 200px;
+  /* min-height: 100px;*/
+  padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: row; 
+
+  font-size: 14px;
+}
+
+.wrapper {
+  padding: 10px;
+  
+  /** max-height: 100px;*/
+}
+
+fa-icon {
+  font-size: 35px;
+}
+
+.expire-time {
+  font-size: 28px;
+}
+
+.block-icon {
+  width: 45px;
+  text-align: center;
+}
+
+.block-text {
+  flex: 1;
+}

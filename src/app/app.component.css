@@ -1,0 +1,24 @@
+p {
+  font-family: Lato;
+}
+
+
+.render {
+  background-color: #f8f6f6
+}
+
+.error-msg {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid red;
+}
+
+.error-item {
+  margin: 10px;
+  padding: 5px;
+  border: 4px dashed orange;
+}
+
+.focusable {
+  cursor: default;
+}

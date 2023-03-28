@@ -1,0 +1,19 @@
+<div class="render-body-wrapper" [attr.style]="themeProperties | safeStyle">
+  <div class="canvas" id="plumbCanvas"  #plumbCanvas
+    [ngStyle]="{transform: 'scale(' + zoom + ')'}">
+    <ng-container *ngIf="renderValueChanges$ | async as render" >
+      <ng-container *ngFor="let block of render.blocks; trackBy getBlockId " #blockList>
+        <ios-designer-render-body-block
+          [@pulseListItem]
+          [focused]="render.focused && render.focused.indexOf(block.uuid) > -1"
+          [openForConnection]="openForDrop.indexOf(block.uuid) > -1"
+          [closedForConnection]="closedForDrop.indexOf(block.uuid) > -1"
+          [block]="block"
+          [layout]="render.layout[block.uuid] ? render.layout[block.uuid] : {}"
+          (delete)="deleteBlock($event)">
+        </ios-designer-render-body-block>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+

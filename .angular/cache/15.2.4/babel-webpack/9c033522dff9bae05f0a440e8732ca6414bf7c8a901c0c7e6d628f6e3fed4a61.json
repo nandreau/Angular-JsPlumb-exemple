@@ -1,0 +1,1 @@
+{"ast":null,"code":"var dfs = require(\"./dfs\");\nmodule.exports = preorder;\nfunction preorder(g, vs) {\n  return dfs(g, vs, \"pre\");\n}","map":null,"metadata":{},"sourceType":"script","externalDependencies":[]}

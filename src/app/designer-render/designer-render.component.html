@@ -1,0 +1,31 @@
+<div class="render-wrapper">
+  <div class="render-header">
+    Yo soy el header del renderizador
+  </div>
+
+  <div class="render-body">
+    <ios-designer-render-body
+			[availablesBlocks]="availablesBlocks"
+      
+      [edges]="configuration.edges"
+      [layout]="configuration.layout"
+      
+      [zoom]="configuration.zoom"
+      [themeCss]="configuration.themeCss"
+      [connectorType]="configuration.connectorType"
+      [focused]="configuration.focused"
+
+			[blocks]="blocks"
+			[selected]="selected"
+			[types]="types"
+			(delete)="blockDeleted($event)"
+			(insert)="insert.emit($event)"
+			(duplicate)="duplicate.emit($event)"
+			(move)="move.emit($event)"
+			(inspectBlock)="inspectBlock.emit($event)"
+      (edgeAdded)="edgeAdded($event)"  
+      (edgeDetached)="edgeDetached($event)"  
+      (layoutChanged)="layoutChanged($event)"  
+    ></ios-designer-render-body>
+  </div>
+</div>

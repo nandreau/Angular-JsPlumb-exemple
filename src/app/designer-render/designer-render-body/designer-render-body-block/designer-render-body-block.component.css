@@ -1,0 +1,100 @@
+
+/**
+ * Clase que se asigna cuándo comienza el drageado
+ * de una conexión y el bloque está disponible
+ */
+/*
+:host.open-for-connection {
+  
+}
+*/
+/**
+ * Clase que se asigna cuándo comienza el drageado
+ * de una conexión y el bloque NO está disponible
+ */
+:host.closed-for-connection {
+  /* background-color: brown; */
+  opacity: 0.4;
+}
+
+:host {
+  transition: opacity 700ms ease-in-out;
+}
+
+:host.jtk-dragged {  
+  box-shadow: 0 10px 10px 0 rgb(187, 190, 196);
+}
+
+/**
+  * Rodea todo el block
+  * Tiene position relativa para permitir que se pueda
+  * posicionar absolutamente el toolbar y el overla
+  */
+:host {
+	border-width: 4px;
+	border-style: dashed;
+	border-color: transparent;
+	position: absolute;
+}
+/**
+ * Bloque destacado
+ */
+:host.block-focused, :host.block-focused:hover {
+  border-color: var(--canvas-block-border-focused);
+}
+/** Hover encima del bloque */
+:host:hover {
+	border-color: #cccccc;
+}
+:host:hover .block-toolbar {
+	visibility: visible;
+}
+/** Bloque se encuentra abierto en inspector */
+:host.open-in-inspector {
+	border-color: #cccccc;
+}
+:host.open-in-inspector .block-toolbar {
+	visibility: visible;;
+}
+/**
+ * Se utiliza una posición absoluto con respecto al host
+ * para lograr que se vea "dentro" del bloque
+ */
+.block-toolbar {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+	background-color: #f5f5f5;
+	visibility: hidden;
+	/** Se sobrepone a otros elementos de los bloques */
+	z-index: 501;
+
+  cursor: pointer;
+}
+/**
+ * Div para capturar todos los clicks dentro del bloque
+ * se utiliza posicionamiento absoluto para que ocupe
+ * todo el espacio generado por el bloque renderizado
+ */
+.block-overlay {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	cursor: pointer;
+	/** Se sobrepone a otros elementos de los bloques */
+	z-index: 500;
+}
+/**
+ * En el div dónde se muestra el bloque renderizado
+ * se utiliza posicionamiento estático para que se dibuje
+ * normalmene el bloque y "cree" el espacio
+ * dónde se van a dibujar el toolbar y el overlay
+ */
+.block-render {
+	/** Solo lo coloco para que quede explícito, pero es el valor por default */
+	position: static;
+}

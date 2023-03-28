@@ -1,0 +1,27 @@
+.node {
+  /** background-color: #F7EF99; */
+  background-color: var(--canvas-block-signal-background-color);
+  color: var(--canvas-block-signal-color);
+
+  min-width: 160px;
+  max-width: 160px;
+  min-height: 60px;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+fa-icon {
+  font-size: 35px;
+}
+
+
+.block-icon {
+  width: 45px;
+  text-align: center;
+
+}
+
+.block-text {
+  flex: 1;
+}

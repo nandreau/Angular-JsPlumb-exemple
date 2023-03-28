@@ -1,0 +1,26 @@
+
+.node {
+  background-color: var(--canvas-block-action-background-color, #7286A0);
+  color: var(--canvas-block-action-color, white);
+
+  min-width: 160px;
+  max-width: 160px;
+  min-height: 60px;
+  padding: 10px;
+  /* text-align: center;*/
+  display: flex;
+  flex-direction: row;
+}
+
+fa-icon {
+  font-size: 35px;
+}
+
+.block-icon {
+  width: 45px;
+  text-align: center;
+}
+
+.block-text {
+  flex: 1;
+}
